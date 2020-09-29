@@ -4,7 +4,7 @@ import javax.servlet.http.*; // servlet library
 import java.io.*;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet ( name = "HelloApplet", urlPatterns = {"HelloApplet"} )
+@WebServlet ( name = "HelloApplet", urlPatterns = {"/HelloApplet"} )
 
 public class HelloApplet extends HttpServlet // Inheriting from HttpServlet makes this a servlet
 {
