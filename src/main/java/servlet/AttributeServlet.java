@@ -16,6 +16,8 @@ public class AttributeServlet extends HttpServlet
 public void doGet (HttpServletRequest request, HttpServletResponse response)
        throws ServletException, IOException
 {
+   response.setContentType("text/html");
+   PrintWriter out = response.getWriter();
    String action = request.getParameter("action");
    if (action != null && action.equals("invalidate")) 
    {
@@ -55,9 +57,6 @@ public void doGet (HttpServletRequest request, HttpServletResponse response)
          }
 
       }
-
-      response.setContentType("text/html");
-      PrintWriter out = response.getWriter();
 
       out.println("<html>");
       // no-cache lets the page reload by clicking on the reload link
