@@ -172,7 +172,7 @@ public class PredicateServlet extends HttpServlet
             output.append("</tr");
         }
         output.append("</table>");
-        out.println(output);
+        out.println(output.toString());
         out.println("</body>");
         out.println("</html>");
         out.close();
