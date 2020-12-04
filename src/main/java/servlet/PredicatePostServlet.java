@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import java.util.Enumeration;
 
 @WebServlet(name = "predicateServletPost", urlPatterns = {"/predicatePost"})
-public class PredicateServlet extends HttpServlet
+public class PredicatePostServlet extends HttpServlet
 {
     String lifeCycleURL = "/predicatePost";
     public void doGet (HttpServletRequest request, HttpServletResponse response)
