@@ -98,7 +98,9 @@ public class PredicateServlet extends HttpServlet
                     return;
                 }
                 //&& !predicate.substring(0, s.length()).equals(s) && !predicate.substring(predicate.length() - s.length(), predicate.length()).equals(s)
-                if (!predicate.contains("\b" + s + "\b")) {
+                Pattern x = Pattern.compile("\\b" + s + "\\b", Pattern.CASE_INSENSITIVE);
+                Matcher y = x.matcher(predicate);
+                if (!y.find()) {
                     out.println("<p>");
                     out.println("Predicate missing one or more variables described in the submission");
                     out.println("</p>");
@@ -130,7 +132,7 @@ public class PredicateServlet extends HttpServlet
         output.append("</tr");
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
-        String adjustedPredicate = predicate.replaceAll("(?i)\\b&\\b", "&&").replaceAll("(?i)\\b|\\b", "||").replaceAll("(?i)\\band\\b", "&&").replaceAll("(?i)\\bor\\b", "||").replaceAll("(?i)\\bv\\b", "||").replaceAll("(?i)\\b^\\b", "&&");
+        String adjustedPredicate = predicate.replaceAll("\\b&\\b", "&&").replaceAll("\\b|\\b", "||").replaceAll("\\band\\b", "&&").replaceAll("\\bOR\\b", "||").replaceAll("\\bAND\\b", "&&").replaceAll("\\bor\\b", "||").replaceAll("\\bv\\b", "||").replaceAll("\\b^\\b", "&&");
         for (ArrayList<String> a : sum) {
             String changedPredicate = new String(predicate);
             if (!a.get(0).equals("")) {
