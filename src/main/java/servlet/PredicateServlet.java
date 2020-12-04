@@ -176,7 +176,6 @@ public class PredicateServlet extends HttpServlet
             out.println("</tr");
         }
         out.println("</table>");
-        out.println(output.toString());
         out.println("</body>");
         out.println("</html>");
         out.close();
