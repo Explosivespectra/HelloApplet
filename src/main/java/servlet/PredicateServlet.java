@@ -156,7 +156,7 @@ public class PredicateServlet extends HttpServlet
             }
         }
         out.println("<p><strong>" + predicate + "</strong></p>");
-        out.println("<table style=\"border:1px;\">");
+        out.println("<table style=\"border:1px;\" border=\"1\">");
         out.println("<tr>");
         out.println("<th>" + var1 + "</th>");
         out.println("<th>" + var2 + "</th>");
