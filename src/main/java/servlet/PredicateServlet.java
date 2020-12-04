@@ -83,7 +83,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
         out.println("<hr>");
         out.println("<hr>");      
-        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
         for (String s : varList) {
             ArrayList<String> currArrList = new ArrayList<String>();
             if (!s.replace(" ", "").equals("")) {
@@ -132,7 +132,7 @@ public class PredicateServlet extends HttpServlet
         output.append("</tr");
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
-        String adjustedPredicate = predicate.replaceAll("\\b&\\b", "&&").replaceAll("\\b|\\b", "||").replaceAll("\\band\\b", "&&").replaceAll("\\bOR\\b", "||").replaceAll("\\bAND\\b", "&&").replaceAll("\\bor\\b", "||").replaceAll("\\bv\\b", "||").replaceAll("\\b^\\b", "&&");
+        String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\band\\b", "&&").replaceAll("\\bOR\\b", "||").replaceAll("\\bAND\\b", "&&").replaceAll("\\bor\\b", "||").replaceAll("\\bv\\b", "||").replaceAll("\\b^\\b", "&&");
         for (ArrayList<String> a : sum) {
             String changedPredicate = new String(predicate);
             if (!a.get(0).equals("")) {
