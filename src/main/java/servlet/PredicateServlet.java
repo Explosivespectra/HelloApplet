@@ -121,7 +121,7 @@ public class PredicateServlet extends HttpServlet
         ArrayList<String> comb = new ArrayList<String>();
         combine(allowed, 0, sum, comb);
         StringBuilder output = new StringBuilder("<p><strong>" + predicate + "</strong></p>");
-        output.append("<table>");
+        output.append("<table style=\"border:1px\">");
         output.append("<tr>");
         output.append("<th>" + var1 + "</th>");
         output.append("<th>" + var2 + "</th>");
@@ -172,9 +172,7 @@ public class PredicateServlet extends HttpServlet
             output.append("</tr");
         }
         output.append("</table>");
-        out.println("<p>");
         out.println(output);
-        out.println("</p>");
         out.println("</body>");
         out.println("</html>");
         out.close();
