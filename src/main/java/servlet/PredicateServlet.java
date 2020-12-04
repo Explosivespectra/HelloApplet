@@ -37,7 +37,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<hr>");
         out.println("<p>");
         //https://cs.gmu.edu:8443/offutt/servlet/formHandler replaced
-        out.println("<form method=\"post\" action=\"post\">");
+        out.println("<form method=\"post\" action=\"https://helloserv.herokuapp.com/predicate\">");
         out.println("<label for=\"var1\">Variable 1</label><br>");
         out.println("<input type=\"text\" id=\"var1\" name=\"var1\" maxlength=\"15\"><br><br>");
         out.println("<label for=\"var2\">Variable 2</label><br>");
