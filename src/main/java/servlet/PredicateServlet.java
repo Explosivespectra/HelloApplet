@@ -45,7 +45,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<input type=\"text\" id=\"predicate\" name=\"predicate\"><br><br>");
         out.println("<input type=\"submit\" value=\"Submit\">");
         out.println("</form");
-        out.printoln("</p>");
+        out.println("</p>");
         out.println("</body>");
         out.println("</html>");
     }
