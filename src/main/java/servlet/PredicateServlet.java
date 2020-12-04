@@ -120,16 +120,7 @@ public class PredicateServlet extends HttpServlet
         ArrayList<ArrayList<String>> sum = new ArrayList<ArrayList<String>>();
         ArrayList<String> comb = new ArrayList<String>();
         combine(allowed, 0, sum, comb);
-        StringBuilder output = new StringBuilder("<p><strong>" + predicate + "</strong></p>");
-        output.append("<table style=\"border:1px\">");
-        output.append("<tr>");
-        output.append("<th>" + var1 + "</th>");
-        output.append("<th>" + var2 + "</th>");
-        output.append("<th>" + var3 + "</th>");
-        output.append("<th>" + var4 + "</th>");
-        output.append("<th>" + var5 + "</th>");
-        output.append("<th>result</th>");
-        output.append("</tr");
+        ArrayList<String> results = new ArrayList<String>();
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
         String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("(?i)\\b" + Pattern.quote("or") + "\\b", "||").replaceAll("\\b" + Pattern.quote("OR") + "\\b", "||").replaceAll("(?i)\\b" + Pattern.quote("AND") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("and") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("v") + "\\b", "||").replaceAll("\\b" + Pattern.quote("^") + "\\b", "&&");
@@ -153,6 +144,7 @@ public class PredicateServlet extends HttpServlet
             String result;
             try {
                 result = "" + se.eval(changedPredicate).toString().replace("1", "true").replace("0", "false");
+                results.add(result);
             }
             catch (ScriptException s) {
                 out.println("<p>");
@@ -162,16 +154,28 @@ public class PredicateServlet extends HttpServlet
                 out.println("</html>");
                 return;
             }
-            output.append("<tr>");
-            output.append("<td>" + a.get(0) + "</td>");
-            output.append("<td>" + a.get(1) + "</td>");
-            output.append("<td>" + a.get(2) + "</td>");
-            output.append("<td>" + a.get(3) + "</td>");
-            output.append("<td>" + a.get(4) + "</td>");
-            output.append("<td>" + result + "</td>");
-            output.append("</tr");
         }
-        output.append("</table>");
+        out.println("<p><strong>" + predicate + "</strong></p>");
+        out.println("<table style=\"border:1px;\">");
+        out.println("<tr>");
+        out.println("<th>" + var1 + "</th>");
+        out.println("<th>" + var2 + "</th>");
+        out.println("<th>" + var3 + "</th>");
+        out.println("<th>" + var4 + "</th>");
+        out.println("<th>" + var5 + "</th>");
+        out.println("<th>result</th>");
+        out.println("</tr");
+        for (int i = 0; i < results.size(); i++) {
+            out.println("<tr>");
+            out.println("<td>" + sum.get(i).get(0) + "</td>");
+            out.println("<td>" + sum.get(i).get(1) + "</td>");
+            out.println("<td>" + sum.get(i).get(2) + "</td>");
+            out.println("<td>" + sum.get(i).get(3) + "</td>");
+            out.println("<td>" + sum.get(i).get(4) + "</td>");
+            out.println("<td>" + results.get(i) + "</td>");
+            out.println("</tr");
+        }
+        out.println("</table>");
         out.println(output.toString());
         out.println("</body>");
         out.println("</html>");
