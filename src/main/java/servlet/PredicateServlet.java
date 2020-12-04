@@ -9,6 +9,8 @@ import javax.script.ScriptException;
 // Import Java Libraries
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Enumeration;
 
 @WebServlet(name = "predicateServlet", urlPatterns = {"/predicate"})
@@ -72,7 +74,7 @@ public class PredicateServlet extends HttpServlet
         varList.add(var4);
         varList.add(var5);
         res.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+        PrintWriter out = res.getWriter();
         out.println("<html>");
         out.println("<head>");
         out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
@@ -169,7 +171,7 @@ public class PredicateServlet extends HttpServlet
         out.close();
     }
     private void combine(ArrayList<ArrayList<String>> lists, int n, ArrayList<ArrayList<String>> sum, ArrayList<String> comb) {
-        if (n == lists.length) {
+        if (n == lists.size()) {
             sum.add(new ArrayList<String>(comb));
             return;
         }
