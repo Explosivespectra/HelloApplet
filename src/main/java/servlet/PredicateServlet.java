@@ -65,7 +65,7 @@ public class PredicateServlet extends HttpServlet
         String var3 = req.getParameter("var3").trim();
         String var4 = req.getParameter("var4").trim();
         String var5 = req.getParameter("var5").trim();
-        String predicate = req.getParameter("predicate").trim();
+        String predicate = req.getParameter("predicate").trim().replaceAll("\\s+", " ");
         ArrayList<String> varList = new ArrayList<String>();
         ArrayList<ArrayList<String>> allowed = new ArrayList<ArrayList<String>>();
         varList.add(var1);
@@ -132,7 +132,7 @@ public class PredicateServlet extends HttpServlet
         output.append("</tr");
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
-        String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\b" + Pattern.quote("or") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("OR") + "\\b", "||").replaceAll("\\b" + Pattern.quote("AND") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("and") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("v") + "\\b", "||").replaceAll("\\b" + Pattern.quote("^") + "\\b", "&&");
+        String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\b" + Pattern.quote("or") + "\\b", "||").replaceAll("\\b" + Pattern.quote("OR") + "\\b", "||").replaceAll("\\b" + Pattern.quote("AND") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("and") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("v") + "\\b", "||").replaceAll("\\b" + Pattern.quote("^") + "\\b", "&&");
         for (ArrayList<String> a : sum) {
             String changedPredicate = new String(predicate);
             if (!a.get(0).equals("")) {
