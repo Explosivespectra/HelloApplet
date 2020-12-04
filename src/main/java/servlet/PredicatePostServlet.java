@@ -19,7 +19,22 @@ public class PredicatePostServlet extends HttpServlet
     public void doGet (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
-
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
+        out.println("<hr>");
+        out.println("<hr>");    
+        out.println("<p>");
+        out.println("Servlet does not accept GET requests");
+        out.println("</p>");
+        out.println("</body>");
+        out.println("</html>");
+        out.close();       
     }
     public void doPost (HttpServletRequest req, HttpServletResponse res)
     throws ServletException, IOException
