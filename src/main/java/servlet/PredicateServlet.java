@@ -32,7 +32,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<hr>");
         out.println("<hr>");
         out.println("<p><strong>This application accepts different variables and a predicate to return a truth table for a given predicate. Restrictions are defined as follows:</strong></p>");
-        out.println("<p><strong><ul><li>Boolean operators that may be handled are OR and AND; parentheses are permitted</li><li>No more than five predicates may be accepted</li><li>Variables and boolean operators should be split apart by at least a single space</li><li>Variables may not consist of non-alphabetical or non-numerical characters</li><li>Maximum length of variable names is 15 characters</li></ul></strong></p>");
+        out.println("<p><strong><ul><li>Boolean operators that may be handled are OR and AND</li><li>Boolean operators may be represented in word, discrete, or computer logic form (or/and, &&/||, &/|, ^/v)</li><li>Parentheses are permitted</li><li>No more than five predicates may be accepted</li><li>Variables and boolean operators should be split apart by at least a single space</li><li>Variables may not consist of non-alphabetical or non-numerical characters or be boolean operand keywords</li><li>Maximum length of variable names is 15 characters</li></ul></strong></p>");
         out.println("<hr>");
         out.println("<hr>");
         out.println("<p>");
@@ -88,7 +88,7 @@ public class PredicateServlet extends HttpServlet
             ArrayList<String> currArrList = new ArrayList<String>();
             if (!s.replace(" ", "").equals("")) {
                 Matcher m = p.matcher(s);
-                if (s.length() > 15 || m.find()) {
+                if (s.length() > 15 || m.find() || s.toLowerCase().equals("or") || s.toLowerCase().equals("and")) {
                     out.println("<p>");
                     out.println("Invalid variables submitted");
                     out.println("</p>");
@@ -97,7 +97,8 @@ public class PredicateServlet extends HttpServlet
                     out.close();
                     return;
                 }
-                if (!predicate.contains(" " + s + " ") && !predicate.substring(0, s.length()).equals(s) && !predicate.substring(predicate.length() - s.length(), predicate.length()).equals(s)) {
+                //&& !predicate.substring(0, s.length()).equals(s) && !predicate.substring(predicate.length() - s.length(), predicate.length()).equals(s)
+                if (!predicate.contains("\\b" + s + "\\b")) {
                     out.println("<p>");
                     out.println("Predicate missing one or more variables described in the submission");
                     out.println("</p>");
@@ -117,8 +118,9 @@ public class PredicateServlet extends HttpServlet
         ArrayList<ArrayList<String>> sum = new ArrayList<ArrayList<String>>();
         ArrayList<String> comb = new ArrayList<String>();
         combine(allowed, 0, sum, comb);
-        StringBuilder output = new StringBuilder("<p>" + predicate + "</p>");
-        output.append("<table><tr>");
+        StringBuilder output = new StringBuilder("<p><strong>" + predicate + "</strong></p>");
+        output.append("<table>");
+        output.append("<tr>");
         output.append("<th>" + var1 + "</th>");
         output.append("<th>" + var2 + "</th>");
         output.append("<th>" + var3 + "</th>");
@@ -128,22 +130,23 @@ public class PredicateServlet extends HttpServlet
         output.append("</tr");
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
+        String adjustedPredicate = predicate.replaceAll("(?i)\\b&\\b", "&&").replaceAll("(?i)\\b|\\b", "||").replaceAll("(?i)\\band\\b", "&&").replaceAll("(?i)\\bor\\b", "||").replaceAll("(?i)\\bv\\b", "||").replaceAll("(?i)\\b^\\b", "&&");
         for (ArrayList<String> a : sum) {
             String changedPredicate = new String(predicate);
             if (!a.get(0).equals("")) {
-                changedPredicate = changedPredicate.replace(var1, a.get(0));
+                changedPredicate = changedPredicate.replaceAll("\\b" + var1 + "\\b", a.get(0));
             }
             if (!a.get(1).equals("")) {
-                changedPredicate = changedPredicate.replace(var2, a.get(1));
+                changedPredicate = changedPredicate.replaceAll("\\b" + var2 + "\\b", a.get(1));
             }
             if (!a.get(2).equals("")) {
-                changedPredicate = changedPredicate.replace(var3, a.get(2));
+                changedPredicate = changedPredicate.replaceAll("\\b" + var3 + "\\b", a.get(2));
             }
             if (!a.get(3).equals("")) {
-                changedPredicate = changedPredicate.replace(var4, a.get(3));
+                changedPredicate = changedPredicate.replaceAll("\\b" + var4 + "\\b", a.get(3));
             }
             if (!a.get(4).equals("")) {
-                changedPredicate = changedPredicate.replace(var5, a.get(4));
+                changedPredicate = changedPredicate.replaceAll("\\b" + var5 + "\\b", a.get(4));
             }
             String result;
             try {
@@ -151,7 +154,7 @@ public class PredicateServlet extends HttpServlet
             }
             catch (ScriptException s) {
                 out.println("<p>");
-                out.println("Invalid expression");
+                out.println("Invalid predicate");
                 out.println("</p>");
                 out.println("</body>");
                 out.println("</html>");
@@ -166,8 +169,9 @@ public class PredicateServlet extends HttpServlet
             output.append("<td>" + result + "</td>");
             output.append("</tr");
         }
+        output.append("/table");
         out.println("<p>");
-        out.println(output + "</table>");
+        out.println(output);
         out.println("</p>");
         out.println("</body>");
         out.println("</html>");
