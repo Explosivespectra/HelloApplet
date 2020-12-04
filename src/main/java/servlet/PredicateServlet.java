@@ -98,7 +98,7 @@ public class PredicateServlet extends HttpServlet
                     return;
                 }
                 //&& !predicate.substring(0, s.length()).equals(s) && !predicate.substring(predicate.length() - s.length(), predicate.length()).equals(s)
-                if (!predicate.contains("\\b" + s + "\\b")) {
+                if (!predicate.contains("\b" + s + "\b")) {
                     out.println("<p>");
                     out.println("Predicate missing one or more variables described in the submission");
                     out.println("</p>");
