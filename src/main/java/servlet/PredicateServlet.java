@@ -82,9 +82,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<body>");
         out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
         out.println("<hr>");
-        out.println("<hr>");
-        out.println("<a href=\"" + lifeCycleURL + ">");
-        out.println("<strong>Return to previous page</strong></a>");        
+        out.println("<hr>");      
         Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         for (String s : varList) {
             ArrayList<String> currArrList = new ArrayList<String>();
