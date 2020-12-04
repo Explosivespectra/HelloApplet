@@ -152,6 +152,11 @@ public class PredicateServlet extends HttpServlet
                 result = "" + se.eval(changedPredicate).toString();
             }
             catch (ScriptException s) {
+                out.println("<p>");
+                out.println("Invalid expression");
+                out.println("</p>");
+                out.println("</body>");
+                out.println("</html>");
                 return;
             }
             output.append("<tr>");
