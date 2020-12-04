@@ -1,5 +1,6 @@
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.smartcardio.ResponseAPDU;
 import javax.servlet.annotation.WebServlet;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -19,8 +20,8 @@ public class PredicatePostServlet extends HttpServlet
     public void doGet (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
-        res.setContentType("text/html");
-        PrintWriter out = res.getWriter();
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
         out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
