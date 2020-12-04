@@ -32,7 +32,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<hr>");
         out.println("<hr>");
         out.println("<p><strong>This application accepts different variables and a predicate to return a truth table for a given predicate. Restrictions are defined as follows:</strong></p>");
-        out.println("<p><strong><ul><li>Boolean operators that may be handled are OR and AND</li><li>Boolean operators may be represented in word, discrete, or computer logic form (or/and, &&/||, &/|, ^/v)</li><li>Parentheses are permitted</li><li>No more than five predicates may be accepted</li><li>Variables and boolean operators should be split apart by at least a single space</li><li>Variables may not consist of non-alphabetical or non-numerical characters or be boolean operand keywords</li><li>Maximum length of variable names is 15 characters</li></ul></strong></p>");
+        out.println("<p><strong><ul><li>Boolean operators that may be handled are OR and AND</li><li>Boolean operators may be represented in word, discrete, or computer logic form (or/and, &&/||, &/|, ^/v)</li><li>Parentheses are permitted</li><li>No more than five predicates may be accepted</li><li>Variables, boolean operators, and parantheses should be split apart by at least a single space</li><li>Variables may not consist of non-alphabetical or non-numerical characters or be boolean operand keywords</li><li>Maximum length of variable names is 15 characters</li></ul></strong></p>");
         out.println("<hr>");
         out.println("<hr>");
         out.println("<p>");
@@ -132,7 +132,7 @@ public class PredicateServlet extends HttpServlet
         output.append("</tr");
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine se = sem.getEngineByName("JavaScript");
-        String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\band\\b", "&&").replaceAll("\\bOR\\b", "||").replaceAll("\\bAND\\b", "&&").replaceAll("\\bor\\b", "||").replaceAll("\\bv\\b", "||").replaceAll("\\b^\\b", "&&");
+        String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\b" + Pattern.quote("or") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("OR") + "\\b", "||").replaceAll("\\b" + Pattern.quote("AND") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("and") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("v") + "\\b", "||").replaceAll("\\b" + Pattern.quote("^") + "\\b", "&&");
         for (ArrayList<String> a : sum) {
             String changedPredicate = new String(predicate);
             if (!a.get(0).equals("")) {
