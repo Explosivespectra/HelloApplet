@@ -134,7 +134,7 @@ public class PredicateServlet extends HttpServlet
         ScriptEngine se = sem.getEngineByName("JavaScript");
         String adjustedPredicate = predicate.replaceAll("\\b" + Pattern.quote("&") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("|") + "\\b", "||").replaceAll("\\b" + Pattern.quote("or") + "\\b", "||").replaceAll("\\b" + Pattern.quote("OR") + "\\b", "||").replaceAll("\\b" + Pattern.quote("AND") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("and") + "\\b", "&&").replaceAll("\\b" + Pattern.quote("v") + "\\b", "||").replaceAll("\\b" + Pattern.quote("^") + "\\b", "&&");
         for (ArrayList<String> a : sum) {
-            String changedPredicate = new String(predicate);
+            String changedPredicate = new String(adjustedPredicate);
             if (!a.get(0).equals("")) {
                 changedPredicate = changedPredicate.replaceAll("\\b" + var1 + "\\b", a.get(0));
             }
@@ -152,7 +152,7 @@ public class PredicateServlet extends HttpServlet
             }
             String result;
             try {
-                result = "" + se.eval(changedPredicate).toString();
+                result = "" + se.eval(changedPredicate).toString().replace("1", "true").replace("0", "false");
             }
             catch (ScriptException s) {
                 out.println("<p>");
@@ -171,7 +171,7 @@ public class PredicateServlet extends HttpServlet
             output.append("<td>" + result + "</td>");
             output.append("</tr");
         }
-        output.append("/table");
+        output.append("</table>");
         out.println("<p>");
         out.println(output);
         out.println("</p>");
