@@ -35,7 +35,7 @@ public class PredicatePersistServlet extends HttpServlet
             if (!(o instanceof Entry)) {
                 return false;
             }
-            return (((Entry)o).var1).equals(var1) && (((Entry)o).var2).equals(var2) && (((Entry)o).var3).equals(var3) && (((Entry)o).var4).equals(var4) && (((Entry)o).var5).equals(var5) && (((Entry)o).predicate).equals(predicate);
+            return ((Entry)o).var1.equals(var1) && ((Entry)o).var2.equals(var2) && ((Entry)o).var3.equals(var3) && ((Entry)o).var4.equals(var4) && ((Entry)o).var5.equals(var5) && ((Entry)o).predicate.equals(predicate);
         }
     }
     
