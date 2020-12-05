@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Enumeration;
+
 //Import google Gson
 import com.google.gson.Gson;
 
@@ -74,7 +74,7 @@ public class PredicatePersistServlet extends HttpServlet
     
         private Entries getAll(){
           Entries entries =  entries = new Entries();
-          entries.entries = new ArrayList();
+          entries.entries = new HashSet<entry>();
     
           try{
             File file = new File(filePath);
