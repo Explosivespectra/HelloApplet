@@ -26,10 +26,21 @@ public class PredicatePersistServlet extends HttpServlet
         String var4;
         String var5;
         String predicate;
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (!(o instanceof Entry)) {
+                return false;
+            }
+            return (((Entry)o).var1).equals(var1) && (((Entry)o).var2).equals(var2) && (((Entry)o).var3).equals(var3) && (((Entry)o).var4).equals(var4) && (((Entry)o).var5).equals(var5) && (((Entry)o).predicate).equals(predicate);
+        }
     }
     
     public class Entries{
-        List<Entry> entries;
+        Set<Entry> entries;
     }
     
     public class EntryManager
@@ -121,10 +132,10 @@ public class PredicatePersistServlet extends HttpServlet
         
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
+        out.println("<title>SWE 432 Assignment 7 Jonah Oentung</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
+        out.println("<h1>SWE 432 Assignment 7 Jonah Oentung</h1>");
         out.println("<hr>");
         out.println("<hr>");
         out.println("<p><strong>This application accepts different variables and a predicate to return a truth table for a given predicate. Restrictions are defined as follows:</strong></p>");

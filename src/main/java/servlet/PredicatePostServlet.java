@@ -24,10 +24,10 @@ public class PredicatePostServlet extends HttpServlet
         PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
+        out.println("<title>SWE 432 Assignment 8 Jonah Oentung</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
+        out.println("<h1>SWE 432 Assignment 8 Jonah Oentung</h1>");
         out.println("<hr>");
         out.println("<hr>");    
         out.println("<p>");
