@@ -68,7 +68,7 @@ public class PredicatePostServlet extends HttpServlet
             ArrayList<String> currArrList = new ArrayList<String>();
             if (!s.replace(" ", "").equals("")) {
                 Matcher m = p.matcher(s);
-                if (s.length() > 15 || m.find() || s.toLowerCase().equals("or") || s.toLowerCase().equals("and")) {
+                if (s.length() > 15 || m.find() || s.toLowerCase().equals("or") || s.toLowerCase().equals("and") || s.toLowerCase().equals("v")) {
                     out.println("<p>");
                     out.println("Invalid variables submitted");
                     out.println("</p>");
