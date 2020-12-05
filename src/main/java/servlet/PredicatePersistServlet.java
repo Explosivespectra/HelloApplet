@@ -73,8 +73,8 @@ public class PredicatePersistServlet extends HttpServlet
         }
     
         private Entries getAll(){
-          Entries entries =  entries = new Entries();
-          entries.entries = new HashSet<entry>();
+          Entries entries = new Entries();
+          entries.entries = new HashSet<Entry>();
     
           try{
             File file = new File(filePath);
