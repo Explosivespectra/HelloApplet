@@ -59,7 +59,9 @@ public class PredicatePersistServlet extends HttpServlet
           newEntry.var4 = var4;
           newEntry.var5 = var5;
           newEntry.predicate = predicate;
-          entries.entries.add(newEntry);
+          if (!entries.entries.contains(newEntry)) { 
+            entries.entries.add(newEntry);
+          }
           try{
             FileWriter fileWriter = new FileWriter(filePath);
             new Gson().toJson(entries, fileWriter);
