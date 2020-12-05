@@ -12,6 +12,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Enumeration;
+//Import google Gson
+import com.google.gson.Gson;
 
 @WebServlet(name = "predicatePersistServlet", urlPatterns = {"/predicatePersist"})
 public class PredicatePersistServlet extends HttpServlet
