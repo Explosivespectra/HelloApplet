@@ -103,7 +103,7 @@ public class PredicatePersistServlet extends HttpServlet
                "<input type=\"hidden\" id=\"var4\" name=\"var4\" value=\"" + entry.var4 + "\">" +
                "<input type=\"hidden\" id=\"var5\" name=\"var5\" value=\"" + entry.var5 + "\">" +
                "<input type=\"hidden\" id=\"predicate\" name=\"predicate\" value=\"" + entry.predicate + "\">" +
-               "<input type=\"submit\" value=\"" + entry.name + "\">" + 
+               "<input type=\"submit\" value=\"" + entry.predicate + "\">" + 
                "</form></td></tr>");
             }
           }
