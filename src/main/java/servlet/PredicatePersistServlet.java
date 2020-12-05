@@ -13,10 +13,104 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Enumeration;
 
-@WebServlet(name = "predicateServlet", urlPatterns = {"/predicate"})
-public class PredicateServlet extends HttpServlet
+@WebServlet(name = "predicatePersistServlet", urlPatterns = {"/predicatePersist"})
+public class PredicatePersistServlet extends HttpServlet
 {
-    String lifeCycleURL = "/predicate";
+    public class Entry 
+    {
+        String var1;
+        String var2;
+        String var3;
+        String var4;
+        String var5;
+        String predicate;
+    }
+    
+    public class Entries{
+        List<Entry> entries;
+    }
+    
+    public class EntryManager
+    {
+        private String filePath = null;
+    
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+        public Entries save(String var1, String var2, String var3, String var4, String var5, String predicate){
+          Entries entries = getAll();
+          Entry newEntry = new Entry();
+          newEntry.var1 = var1;
+          newEntry.var2 = var2;
+          newEntry.var3 = var3;
+          newEntry.var4 = var4;
+          newEntry.var5 = var5;
+          newEntry.predicate = predicate;
+          entries.entries.add(newEntry);
+          try{
+            FileWriter fileWriter = new FileWriter(filePath);
+            new Gson().toJson(entries, fileWriter);
+            fileWriter.flush();
+            fileWriter.close();
+          }catch(IOException ioException){
+            return null;
+          }
+    
+          return entries;
+        }
+    
+        private Entries getAll(){
+          Entries entries =  entries = new Entries();
+          entries.entries = new ArrayList();
+    
+          try{
+            File file = new File(filePath);
+            if(!file.exists()){
+              return entries;
+            }
+    
+            BufferedReader bufferedReader =
+              new BufferedReader(new FileReader(file));
+            Entries readEntries =
+              new Gson().fromJson(bufferedReader, Entries.class);
+    
+            if(readEntries != null && readEntries.entries != null){
+              entries = readEntries;
+            }
+            bufferedReader.close();
+    
+          }catch(IOException ioException){
+          }
+    
+          return entries;
+        }
+    
+        public String getAllAsHTMLTable(Entries entries){
+          StringBuilder htmlOut = new StringBuilder("<table>");
+          htmlOut.append("<tr><th>Previous Predicates</th></tr>");
+          if(entries == null
+              || entries.entries == null || entries.entries.size() == 0){
+            htmlOut.append("<tr><td>No entries yet.</td></tr>");
+          }else{
+            for(Entry entry: entries.entries){
+               htmlOut.append(
+               "<tr><td><form method=\"post\" action=\"https://helloserv.herokuapp.com/predicatePersist\">" +
+               "<input type=\"hidden\" id=\"var1\" name=\"var1\" value=\"" + entry.var1 + "\">" +
+               "<input type=\"hidden\" id=\"var2\" name=\"var2\" value=\"" + entry.var2 + "\">" +
+               "<input type=\"hidden\" id=\"var3\" name=\"var3\" value=\"" + entry.var3 + "\">" +
+               "<input type=\"hidden\" id=\"var4\" name=\"var4\" value=\"" + entry.var4 + "\">" +
+               "<input type=\"hidden\" id=\"var5\" name=\"var5\" value=\"" + entry.var5 + "\">" +
+               "<input type=\"hidden\" id=\"predicate\" name=\"predicate\" value=\"" + entry.predicate + "\">" +
+               "<input type=\"submit\" value=\"" + entry.name + "\">" + 
+               "</form></td></tr>");
+            }
+          }
+          htmlOut.append("</table>");
+          return htmlOut.toString();
+        }
+    
+      }    
+    String lifeCycleURL = "/predicatePersist";
     public void doGet (HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
     {
@@ -37,7 +131,7 @@ public class PredicateServlet extends HttpServlet
         out.println("<hr>");
         out.println("<p>");
         //https://cs.gmu.edu:8443/offutt/servlet/formHandler replaced
-        out.println("<form method=\"post\" action=\"https://helloserv.herokuapp.com/predicate\">");
+        out.println("<form method=\"post\" action=\"https://helloserv.herokuapp.com/predicatePersist\">");
         out.println("<label for=\"var1\">Variable 1</label><br>");
         out.println("<input type=\"text\" id=\"var1\" name=\"var1\" maxlength=\"15\"><br><br>");
         out.println("<label for=\"var2\">Variable 2</label><br>");
@@ -53,6 +147,9 @@ public class PredicateServlet extends HttpServlet
         out.println("<input type=\"submit\" value=\"Submit\">");
         out.println("</form");
         out.println("</p>");
+        EntryManager entryManager = new EntryManager();
+        entryManager.setFilePath("predicates.json");
+        out.println(entryManager.getAllAsHTMLTable(entryManager.getAll()));
         out.println("</body>");
         out.println("</html>");
         out.close();
@@ -77,12 +174,12 @@ public class PredicateServlet extends HttpServlet
         PrintWriter out = res.getWriter();
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
+        out.println("<title>SWE 432 Assignment 7 Jonah Oentung</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
+        out.println("<h1>SWE 432 Assignment 7 Jonah Oentung</h1>");
         out.println("<hr>");
-        out.println("<hr>");    
+        out.println("<hr>");      
         if (predicate.equals(""))  {
             out.println("<p>");
             out.println("Invalid predicate");
@@ -90,7 +187,7 @@ public class PredicateServlet extends HttpServlet
             out.println("</body>");
             out.println("</html>");
             return;
-        } 
+        }   
         Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
         for (String s : varList) {
             ArrayList<String> currArrList = new ArrayList<String>();
@@ -162,6 +259,15 @@ public class PredicateServlet extends HttpServlet
                 out.println("</html>");
                 return;
             }
+        }
+        EntryManager entryManager = new EntryManager();
+        entryManager.setFilePath("predicates.json");
+        Entries newEntries=entryManager.save(var1, var2, var3, var4, var5, predicate);
+        if (newEntries ==  null) {
+            out.println("<p><strong>predicate not saved</strong></p>");        
+        }
+        else {
+            out.println("<p><strong>predicate saved</strong></p>");  
         }
         out.println("<p><strong>" + predicate + "</strong></p>");
         out.println("<table style=\"border:1px;\" border=\"1\">");

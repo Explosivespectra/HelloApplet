@@ -57,12 +57,20 @@ public class PredicatePostServlet extends HttpServlet
         PrintWriter out = res.getWriter();
         out.println("<html>");
         out.println("<head>");
-        out.println("<title>SWE 432 Assignment 5 Jonah Oentung</title>");
+        out.println("<title>SWE 432 Assignment 8 Jonah Oentung</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>SWE 432 Assignment 5 Jonah Oentung</h1>");
+        out.println("<h1>SWE 432 Assignment 8 Jonah Oentung</h1>");
         out.println("<hr>");
-        out.println("<hr>");      
+        out.println("<hr>");    
+        if (predicate.equals(""))  {
+            out.println("<p>");
+            out.println("Invalid predicate");
+            out.println("</p>");
+            out.println("</body>");
+            out.println("</html>");
+            return;
+        }   
         Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
         for (String s : varList) {
             ArrayList<String> currArrList = new ArrayList<String>();
